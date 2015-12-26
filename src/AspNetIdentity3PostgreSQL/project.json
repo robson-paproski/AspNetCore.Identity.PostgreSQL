@@ -5,27 +5,24 @@
   "tags": [ "" ],
   "projectUrl": "",
   "licenseUrl": "",
+
+  "dependencies": {
+    "Microsoft.AspNet.Identity": "3.0.0-rc1-final",
+    "Microsoft.Extensions.Configuration": "1.0.0-rc2-15926",
+    "Microsoft.Extensions.Configuration.Json": "1.0.0-rc2-15926",
+    "Npgsql": "3.1.0-alpha6"
+  },
+
+
   "frameworks": {
-    "net451": {
-      "dependencies": {
-        "Npgsql": "3.0.4"
-      },
+    "dnx451": {
       "frameworkAssemblies": {
         "System.Data": "4.0.0.0"
       }
     },
-    "dotnet5.4": {
+    "dnxcore50": {
       "dependencies": {
-        "Microsoft.CSharp": "4.0.1-beta-23516",
-        "System.Data.Common": "4.0.1-rc2-23616",        
-        "System.Linq": "4.0.1-beta-23516",
-        "System.Runtime": "4.0.21-beta-23516",
-        "System.Threading": "4.0.11-beta-23516"
       }
     }
-  },
-  "dependencies": {
-    "Microsoft.AspNet.Identity": "3.0.0-rc1-final",    
-    "Microsoft.Extensions.Configuration.Json": "1.0.0-rc2-15926"
   }
 }

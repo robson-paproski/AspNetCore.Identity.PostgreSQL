@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Data;
 using System.Threading;
 using Microsoft.Extensions.Configuration;
-using Npgsql;
 
 namespace AspNetIdentity3PostgreSQL
 {
@@ -12,7 +11,7 @@ namespace AspNetIdentity3PostgreSQL
     /// </summary>
     public class PostgreSQLDatabase : IDisposable
     {
-        private NpgsqlConnection _connection;
+        private Npgsql.NpgsqlConnection _connection;
 
         /// Default constructor which uses the "DefaultConnection" connectionString, often located in web.config.
         /// </summary>
@@ -32,7 +31,7 @@ namespace AspNetIdentity3PostgreSQL
                     .AddJsonFile("config.json");
             var config = configbuilder.Build();
             var connectionString = config.Get(connectionStringName);
-            _connection = new NpgsqlConnection(connectionString);
+            _connection = new Npgsql.NpgsqlConnection(connectionString);
         }
 
         public int ExecuteSQL(string commandText, Dictionary<string, object> parameters)
@@ -154,9 +153,9 @@ namespace AspNetIdentity3PostgreSQL
             return rows;
         }
 
-        private NpgsqlCommand CreateCommand(string commandText, Dictionary<string, object> parameters)
+        private Npgsql.NpgsqlCommand CreateCommand(string commandText, Dictionary<string, object> parameters)
         {
-            NpgsqlCommand command = _connection.CreateCommand();
+            Npgsql.NpgsqlCommand command = _connection.CreateCommand();
             command.CommandText = commandText;
             AddParameters(command, parameters);
 
@@ -168,7 +167,7 @@ namespace AspNetIdentity3PostgreSQL
         /// </summary>
         /// <param name="commandText">The PostgreSQL query to execute.</param>
         /// <param name="parameters">Parameters to pass to the PostgreSQL query.</param>
-        private static void AddParameters(NpgsqlCommand command, Dictionary<string, object> parameters)
+        private static void AddParameters(Npgsql.NpgsqlCommand command, Dictionary<string, object> parameters)
         {
             if (parameters == null)
             {
