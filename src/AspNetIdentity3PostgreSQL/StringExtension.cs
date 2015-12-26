@@ -1,4 +1,4 @@
-﻿namespace AspNetIdentity3PostgreSQL
+﻿namespace AspNet.Identity.PostgreSQL
 {
     public static class StringExtension
     {

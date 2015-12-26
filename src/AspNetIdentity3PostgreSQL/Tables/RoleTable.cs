@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace AspNetIdentity3PostgreSQL.Tables
+namespace AspNet.Identity.PostgreSQL.Tables
 {
     /// <summary>
     /// Class that represents the AspNetRoles table in the PostgreSQL Database.

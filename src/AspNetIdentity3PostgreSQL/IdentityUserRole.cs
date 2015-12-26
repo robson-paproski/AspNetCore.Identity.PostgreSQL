@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace AspNetIdentity3PostgreSQL
+namespace AspNet.Identity.PostgreSQL
 {
     /// <summary>
     ///  Default implementation of IdentityUserRole using a Guid as primary key

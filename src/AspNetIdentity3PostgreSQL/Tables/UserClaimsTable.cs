@@ -1,10 +1,10 @@
-﻿using AspNetIdentity3PostgreSQL.Tables;
+﻿using AspNet.Identity.PostgreSQL.Tables;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 
-namespace AspNetIdentity3PostgreSQL.Tables
+namespace AspNet.Identity.PostgreSQL.Tables
 {
     /// <summary>
     /// Class that represents the AspNetUserClaims table in the PostgreSQL Database.
@@ -33,11 +33,11 @@ namespace AspNetIdentity3PostgreSQL.Tables
         /// </summary>
         /// <param name="userId">The user's id.</param>
         /// <returns></returns>
-        public ClaimsIdentity FindByUserId(string userId)
+        public ClaimsIdentity FindByUserId(Guid userId)
         {
             ClaimsIdentity claims = new ClaimsIdentity();
             string commandText = "SELECT * FROM "+fullTableName+" WHERE "+fieldUserID.Quoted()+" = @userId";
-            Dictionary<string, object> parameters = new Dictionary<string, object>() { { "@userId", userId } };
+            Dictionary<string, object> parameters = new Dictionary<string, object>() { { "userId", userId } };
 
             var rows = _database.ExecuteQuery(commandText, parameters);
             foreach (var row in rows)
@@ -69,7 +69,7 @@ namespace AspNetIdentity3PostgreSQL.Tables
         /// <param name="userClaim">User's claim to be added.</param>
         /// <param name="userId">User's Id.</param>
         /// <returns></returns>
-        public int Insert(Claim userClaim, string userId)
+        public int Insert(Claim userClaim, Guid userId)
         {
             string commandText = "INSERT INTO "+fullTableName+" ("+fieldClaimValue.Quoted()+", "+fieldClaimType.Quoted()+", "+fieldUserID.Quoted()+") "+
                 " VALUES (@value, @type, @userId)";

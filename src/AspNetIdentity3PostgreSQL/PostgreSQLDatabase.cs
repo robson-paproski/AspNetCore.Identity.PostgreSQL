@@ -4,7 +4,7 @@ using System.Data;
 using System.Threading;
 using Microsoft.Extensions.Configuration;
 
-namespace AspNetIdentity3PostgreSQL
+namespace AspNet.Identity.PostgreSQL
 {
     /// <summary>
     /// Class that encapsulates PostgreSQL database connections and CRUD operations.
@@ -13,7 +13,7 @@ namespace AspNetIdentity3PostgreSQL
     {
         private Npgsql.NpgsqlConnection _connection;
 
-        /// Default constructor which uses the "DefaultConnection" connectionString, often located in web.config.
+        /// Default constructor which uses the "DefaultConnection" connectionString
         /// </summary>
         public PostgreSQLDatabase()
             : this("DefaultConnection")
@@ -30,7 +30,8 @@ namespace AspNetIdentity3PostgreSQL
                 new ConfigurationBuilder()
                     .AddJsonFile("config.json");
             var config = configbuilder.Build();
-            var connectionString = config.Get(connectionStringName);
+            var connectionString = config[connectionStringName];
+            
             _connection = new Npgsql.NpgsqlConnection(connectionString);
         }
 

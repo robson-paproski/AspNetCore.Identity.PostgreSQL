@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using Microsoft.AspNet.Identity;
 
-namespace AspNetIdentity3PostgreSQL.Tables
+namespace AspNet.Identity.PostgreSQL.Tables
 {
     /// <summary>
     /// Class that represents the AspNetUserLogins table in the PostgreSQL Database.
@@ -97,7 +99,7 @@ namespace AspNetIdentity3PostgreSQL.Tables
         /// </summary>
         /// <param name="userId">The user's id.</param>
         /// <returns></returns>
-        public List<UserLoginInfo> FindByUserId(string userId)
+        public List<UserLoginInfo> FindByUserId(Guid userId)
         {
             List<UserLoginInfo> logins = new List<UserLoginInfo>();
             string commandText = "SELECT * FROM "+fullTableName+" WHERE "+fielduserID.Quoted()+" = @userId";

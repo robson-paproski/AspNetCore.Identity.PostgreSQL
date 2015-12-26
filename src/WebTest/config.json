@@ -1,0 +1,3 @@
+﻿{
+  "DefaultConnection": "Server = localhost; Port = 5432; Database = **; User Id = postgres; Password = **"
+}

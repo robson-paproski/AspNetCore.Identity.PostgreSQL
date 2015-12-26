@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace AspNetIdentity3PostgreSQL.Tables
+namespace AspNet.Identity.PostgreSQL.Tables
 {
     /// <summary>
     /// Classe que representa a tabela AspNetUserRoles na base PostgreSQL
@@ -30,7 +30,7 @@ namespace AspNetIdentity3PostgreSQL.Tables
         /// </summary>
         /// <param name="userId">Código do Usuário</param>
         /// <returns></returns>
-        public List<string> FindByUserId(string userId)
+        public List<string> FindByUserId(Guid userId)
         {
             List<string> roles = new List<string>();
             //TODO: This probably does not work, and may need testing.

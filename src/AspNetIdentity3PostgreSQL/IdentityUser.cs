@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace AspNetIdentity3PostgreSQL
+namespace AspNet.Identity.PostgreSQL
 {
     public class IdentityUser : IdentityUser<Guid>
     {

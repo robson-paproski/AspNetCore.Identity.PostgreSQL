@@ -1,22 +1,20 @@
 ﻿using System;
-using System.Collections;
 using System.Linq;
-using AspNetIdentity3PostgreSQL.Tables;
+using AspNet.Identity.PostgreSQL.Tables;
 using Microsoft.AspNet.Identity;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Globalization;
 using System.Security.Claims;
 using System.Threading;
 using System.Threading.Tasks;
 
 
-namespace AspNetIdentity3PostgreSQL.Stores
+namespace AspNet.Identity.PostgreSQL.Stores
 {
     /// <summary>
     /// Class that implements the key ASP.NET Identity user store interfaces
     /// </summary>
-    public class UserStore<TUser, TRole> : IUserLoginStore<TUser>,
+    public class UserStore<TUser> : IUserLoginStore<TUser>,
         IUserRoleStore<TUser>,
         IUserClaimStore<TUser>,
         IUserPasswordStore<TUser>,
@@ -25,9 +23,7 @@ namespace AspNetIdentity3PostgreSQL.Stores
         IUserLockoutStore<TUser>,
         IUserPhoneNumberStore<TUser>,
         IQueryableUserStore<TUser>,
-        IUserTwoFactorStore<TUser>
-        where TUser : IdentityUser
-        where TRole : IdentityRole
+        IUserTwoFactorStore<TUser> where TUser : IdentityUser
     {
         private readonly UserTable<TUser> _userTable;
         private readonly RoleTable _roleTable;
@@ -40,10 +36,17 @@ namespace AspNetIdentity3PostgreSQL.Stores
         /// <summary>
         /// Default constructor that initializes a new PostgreSQLDatabase instance using the Default Connection string.
         /// </summary>
-        public UserStore()
+        public UserStore() 
         {
-            new UserStore<TUser, TRole>(new PostgreSQLDatabase());
+            Database = new PostgreSQLDatabase();
+            _userTable = new UserTable<TUser>(Database);
+            _roleTable = new RoleTable(Database);
+            _userRolesTable = new UserRolesTable(Database);
+            _userClaimsTable = new UserClaimsTable(Database);
+            _userLoginsTable = new UserLoginsTable(Database);
         }
+
+    
 
         /// <summary>
         /// Constructor that takes a PostgreSQLDatabase as argument.
@@ -378,7 +381,7 @@ namespace AspNetIdentity3PostgreSQL.Stores
             {
                 throw new ArgumentNullException(nameof(user));
             }
-            return _userRolesTable.FindByUserId(user.Id.ToString()); ;
+            return _userRolesTable.FindByUserId(user.Id); ;
         }
 
         /// <summary>
@@ -444,8 +447,10 @@ namespace AspNetIdentity3PostgreSQL.Stores
             {
                 throw new ArgumentNullException(nameof(user));
             }
-
-            return _userClaimsTable.FindByUserId(user.Id.ToString()).Claims as IList<Claim>;
+            var list = _userClaimsTable.FindByUserId(user.Id);
+            if (list == null)
+                return null;
+            return list.Claims.ToList();
         }
       
 
@@ -469,7 +474,7 @@ namespace AspNetIdentity3PostgreSQL.Stores
             }
             foreach (var claim in claims)
             {
-                _userClaimsTable.Insert(claim, user.Id.ToString());
+                _userClaimsTable.Insert(claim, user.Id);
             }
             return Task.FromResult(false);
         }
@@ -594,7 +599,7 @@ namespace AspNetIdentity3PostgreSQL.Stores
             }
             
             
-            return _userLoginsTable.FindByUserId(user.Id.ToString());
+            return _userLoginsTable.FindByUserId(user.Id);
         }
 
         /// <summary>
@@ -652,7 +657,6 @@ namespace AspNetIdentity3PostgreSQL.Stores
                 throw new ArgumentNullException(nameof(user));
             }
             user.EmailConfirmed = confirmed;
-            _userTable.Update(user);
             return Task.FromResult(0);
         }
 
@@ -672,7 +676,6 @@ namespace AspNetIdentity3PostgreSQL.Stores
                 throw new ArgumentNullException(nameof(user));
             }
             user.Email = email;
-            _userTable.Update(user);
             return Task.FromResult(0);
         }
 
@@ -783,7 +786,6 @@ namespace AspNetIdentity3PostgreSQL.Stores
                 throw new ArgumentNullException(nameof(user));
             }
             user.LockoutEnd = lockoutEnd;
-            _userTable.Update(user);
             return Task.FromResult(0);
         }
 
@@ -802,7 +804,6 @@ namespace AspNetIdentity3PostgreSQL.Stores
                 throw new ArgumentNullException(nameof(user));
             }
             user.AccessFailedCount++;
-            _userTable.Update(user);
             return Task.FromResult(user.AccessFailedCount);
         }
 
@@ -822,7 +823,7 @@ namespace AspNetIdentity3PostgreSQL.Stores
                 throw new ArgumentNullException(nameof(user));
             }
             user.AccessFailedCount = 0;
-            _userTable.Update(user);
+
             return Task.FromResult(0);
         }
 
@@ -878,7 +879,6 @@ namespace AspNetIdentity3PostgreSQL.Stores
                 throw new ArgumentNullException(nameof(user));
             }
             user.LockoutEnabled = enabled;
-            _userTable.Update(user);
             return Task.FromResult(0);
         }
 
@@ -898,7 +898,6 @@ namespace AspNetIdentity3PostgreSQL.Stores
                 throw new ArgumentNullException(nameof(user));
             }
             user.PhoneNumber = phoneNumber;
-            _userTable.Update(user);
             return Task.FromResult(0);
         }
 
@@ -955,7 +954,6 @@ namespace AspNetIdentity3PostgreSQL.Stores
                 throw new ArgumentNullException(nameof(user));
             }
             user.PhoneNumberConfirmed = confirmed;
-            _userTable.Update(user);
             return Task.FromResult(0);
         }
 
@@ -975,7 +973,6 @@ namespace AspNetIdentity3PostgreSQL.Stores
                 throw new ArgumentNullException(nameof(user));
             }
             user.SecurityStamp = stamp;
-            _userTable.Update(user);
             return Task.FromResult(0);
         }
 
@@ -1013,7 +1010,6 @@ namespace AspNetIdentity3PostgreSQL.Stores
                 throw new ArgumentNullException(nameof(user));
             }
             user.TwoFactorEnabled = enabled;
-            _userTable.Update(user);
             return Task.FromResult(0);
         }
 

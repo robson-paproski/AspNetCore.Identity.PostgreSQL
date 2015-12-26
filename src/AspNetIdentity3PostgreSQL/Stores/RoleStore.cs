@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Linq;
-using AspNetIdentity3PostgreSQL.Tables;
+using AspNet.Identity.PostgreSQL.Tables;
 using Microsoft.AspNet.Identity;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace AspNetIdentity3PostgreSQL.Stores
+namespace AspNet.Identity.PostgreSQL.Stores
 {
     /// <summary>
     /// Class that implements the key ASP.NET Identity role store iterfaces.
@@ -30,7 +30,8 @@ namespace AspNetIdentity3PostgreSQL.Stores
         /// </summary>
         public RoleStore()
         {
-            new RoleStore<TRole>(new PostgreSQLDatabase());
+            this.Database = new PostgreSQLDatabase();
+            this.roleTable = new RoleTable(Database); 
         }
 
         /// <summary>
@@ -45,47 +46,47 @@ namespace AspNetIdentity3PostgreSQL.Stores
 
         public void Dispose()
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
         public Task<IdentityResult> CreateAsync(TRole role, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            return Task.FromResult(IdentityResult.Success);
         }
 
         public Task<IdentityResult> UpdateAsync(TRole role, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            return Task.FromResult(IdentityResult.Success);
         }
 
         public Task<IdentityResult> DeleteAsync(TRole role, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            return Task.FromResult(IdentityResult.Success);
         }
 
         public Task<string> GetRoleIdAsync(TRole role, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            return Task.FromResult("");
         }
 
         public Task<string> GetRoleNameAsync(TRole role, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            return Task.FromResult("");
         }
 
         public Task SetRoleNameAsync(TRole role, string roleName, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            return Task.FromResult(0);
         }
 
         public Task<string> GetNormalizedRoleNameAsync(TRole role, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            return Task.FromResult("");
         }
 
         public Task SetNormalizedRoleNameAsync(TRole role, string normalizedName, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            return Task.FromResult(0);
         }
 
         public Task<TRole> FindByIdAsync(string roleId, CancellationToken cancellationToken)

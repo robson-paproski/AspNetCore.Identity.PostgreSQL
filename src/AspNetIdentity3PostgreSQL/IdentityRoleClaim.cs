@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace AspNetIdentity3PostgreSQL
+namespace AspNet.Identity.PostgreSQL
 {
     /// <summary>
     /// Represents a claim that is granted to all users within a role.

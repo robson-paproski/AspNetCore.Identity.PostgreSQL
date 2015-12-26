@@ -1,4 +1,4 @@
-﻿namespace AspNetIdentity3PostgreSQL.Tables
+﻿namespace AspNet.Identity.PostgreSQL.Tables
 {
     internal static class Consts
     {

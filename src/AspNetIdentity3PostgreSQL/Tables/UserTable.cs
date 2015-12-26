@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace AspNetIdentity3PostgreSQL.Tables
+namespace AspNet.Identity.PostgreSQL.Tables
 {
     /// <summary>
     /// Classe que representa a tabela AspNetUsers
@@ -53,6 +53,7 @@ namespace AspNetIdentity3PostgreSQL.Tables
 
         internal static TUser loadUser(Dictionary<string, string> row)
         {
+            if (row == null) return null;
             TUser user = null;
             user = (TUser)Activator.CreateInstance(typeof(TUser));
             user.Id = new Guid(row[FieldId]);
@@ -127,7 +128,7 @@ namespace AspNetIdentity3PostgreSQL.Tables
             if (userName != null)
                 userName = userName.ToLower();
 
-            string commandText = "SELECT *  FROM " + fullTableName + " WHERE " + FieldUserName.Quoted() + " = @name";
+            string commandText = "SELECT *  FROM " + fullTableName + " WHERE lower(" + FieldUserName.Quoted() + ") = @name";
             Dictionary<string, object> parameters = new Dictionary<string, object>() { { "@name", userName } };
 
             var row = _database.ExecuteQueryGetSingleRow(commandText, parameters);
@@ -231,7 +232,7 @@ namespace AspNetIdentity3PostgreSQL.Tables
                 " VALUES (@id, @name, @pwdHash, @SecStamp, @email, @emailconfirmed, @phoneNumber, @phoneNumberConfirmed, @twoFactorEnabled, @lockoutEndDate, @lockoutEnabled, @AccessFailedCount);";
             Dictionary<string, object> parameters = new Dictionary<string, object>();
             parameters.Add("@name", user.UserName);
-            parameters.Add("@id", user.Id.ToString());
+            parameters.Add("@id", user.Id);
             parameters.Add("@pwdHash", user.PasswordHash);
             parameters.Add("@SecStamp", user.SecurityStamp);
             parameters.Add("@email", user.Email);
@@ -296,7 +297,7 @@ namespace AspNetIdentity3PostgreSQL.Tables
             parameters.Add("@userName", user.UserName);
             parameters.Add("@pswHash", user.PasswordHash);
             parameters.Add("@secStamp", user.SecurityStamp);
-            parameters.Add("@userId", user.Id.ToString());
+            parameters.Add("@userId", user.Id);
             parameters.Add("@email", user.Email);
             parameters.Add("@emailconfirmed", user.EmailConfirmed);
             parameters.Add("@phoneNumber", user.PhoneNumber);
@@ -312,10 +313,9 @@ namespace AspNetIdentity3PostgreSQL.Tables
         {
             TUser user = null;
 
-            await Task.Run(() =>
-            {
+         
                 user = GetUserByUserName(normalizedUserName);
-            });
+          
             return user;
         }
 
@@ -323,10 +323,9 @@ namespace AspNetIdentity3PostgreSQL.Tables
         {
             TUser user = null;
 
-            await Task.Run(() =>
-            {
+         
                 user = GetUserById(userId);
-            });
+         
             return user;
         }
     }

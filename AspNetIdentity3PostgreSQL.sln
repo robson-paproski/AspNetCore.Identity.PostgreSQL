@@ -10,7 +10,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		global.json = global.json
 	EndProjectSection
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "AspNetIdentity3PostgreSQL", "src\AspNetIdentity3PostgreSQL\AspNetIdentity3PostgreSQL.xproj", "{0B21FC24-FAA1-4496-9E86-1B77F0A18A15}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "AspNet.Identity.PostgreSQL", "src\AspNetIdentity3PostgreSQL\AspNet.Identity.PostgreSQL.xproj", "{0B21FC24-FAA1-4496-9E86-1B77F0A18A15}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "WebTest", "src\WebTest\WebTest.xproj", "{877369D7-D17B-4B02-9385-47CEE6E2784D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -22,11 +24,16 @@ Global
 		{0B21FC24-FAA1-4496-9E86-1B77F0A18A15}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0B21FC24-FAA1-4496-9E86-1B77F0A18A15}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0B21FC24-FAA1-4496-9E86-1B77F0A18A15}.Release|Any CPU.Build.0 = Release|Any CPU
+		{877369D7-D17B-4B02-9385-47CEE6E2784D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{877369D7-D17B-4B02-9385-47CEE6E2784D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{877369D7-D17B-4B02-9385-47CEE6E2784D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{877369D7-D17B-4B02-9385-47CEE6E2784D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{0B21FC24-FAA1-4496-9E86-1B77F0A18A15} = {F031D30B-35A0-432F-8E84-943BC9E3B34F}
+		{877369D7-D17B-4B02-9385-47CEE6E2784D} = {F031D30B-35A0-432F-8E84-943BC9E3B34F}
 	EndGlobalSection
 EndGlobal

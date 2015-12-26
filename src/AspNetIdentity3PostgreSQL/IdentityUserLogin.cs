@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace AspNetIdentity3PostgreSQL
+namespace AspNet.Identity.PostgreSQL
 {
     /// <summary>
     /// Default implementation of UserLogin using Guid

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace AspNetIdentity3PostgreSQL
+namespace AspNet.Identity.PostgreSQL
 {
     /// <summary>
     /// Represents a claim that a user possesses. 
