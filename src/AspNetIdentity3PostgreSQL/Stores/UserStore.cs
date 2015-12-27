@@ -172,7 +172,10 @@ namespace AspNet.Identity.PostgreSQL.Stores
             {
                 throw new ArgumentNullException(nameof(user));
             }
-            _userTable.Insert(user);
+            await Task.Run(() =>
+            {
+                _userTable.Insert(user);
+            }, cancellationToken);
             return IdentityResult.Success;
         }
 
@@ -191,7 +194,11 @@ namespace AspNet.Identity.PostgreSQL.Stores
                 throw new ArgumentNullException(nameof(user));
             }
             user.ConcurrencyStamp = Guid.NewGuid().ToString();
-            _userTable.Update(user);  //TODO: Implement Concurrency in a correct way
+            await Task.Run(() =>
+            {
+                _userTable.Update(user);  //TODO: Implement Concurrency in a correct way
+            }, cancellationToken);
+            
            /* try
             {
                 await SaveChanges(cancellationToken);
@@ -217,16 +224,11 @@ namespace AspNet.Identity.PostgreSQL.Stores
             {
                 throw new ArgumentNullException(nameof(user));
             }
-
-            _userTable.Delete(user);
-            /*try
+            await Task.Run(() =>
             {
-                await SaveChanges(cancellationToken);
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                return IdentityResult.Failed(ErrorDescriber.ConcurrencyFailure());
-            }*/
+                _userTable.Delete(user);
+            }, cancellationToken);
+            
             return IdentityResult.Success;
         }
 
@@ -243,7 +245,7 @@ namespace AspNet.Identity.PostgreSQL.Stores
             cancellationToken.ThrowIfCancellationRequested();
             ThrowIfDisposed();
             
-            return _userTable.GetUserByIdAsync(userId);
+            return _userTable.GetUserByIdAsync(new Guid(userId));
         }
 
  
@@ -330,14 +332,16 @@ namespace AspNet.Identity.PostgreSQL.Stores
             {
                 throw new ArgumentException("Value cannot be null or empty", nameof(roleName));
             }
-
-            var roleEntity = _roleTable.GetRoleByName(roleName);
-            if (roleEntity == null)
+            await Task.Run(() =>
             {
-                throw new InvalidOperationException(String.Format(CultureInfo.CurrentCulture, "Role not Found", roleName));
-            }
-            var ur = new IdentityUserRole() { UserId = user.Id, RoleId = roleEntity.Id };
-            _userRolesTable.Insert(ur);
+                var roleEntity = _roleTable.GetRoleByName(roleName);
+                if (roleEntity == null)
+                {
+                    throw new InvalidOperationException(String.Format(CultureInfo.CurrentCulture, "Role not Found", roleName));
+                }
+                var ur = new IdentityUserRole() { UserId = user.Id, RoleId = roleEntity.Id };
+                _userRolesTable.Insert(ur);
+            }, cancellationToken);
         }
 
         /// <summary>
@@ -347,7 +351,7 @@ namespace AspNet.Identity.PostgreSQL.Stores
         /// <param name="roleName">The role to remove.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> used to propagate notifications that the operation should be canceled.</param>
         /// <returns>The <see cref="Task"/> that represents the asynchronous operation.</returns>
-        public async virtual Task RemoveFromRoleAsync(TUser user, string roleName, CancellationToken cancellationToken = default(CancellationToken))
+        public virtual async Task RemoveFromRoleAsync(TUser user, string roleName, CancellationToken cancellationToken = default(CancellationToken))
         {
             cancellationToken.ThrowIfCancellationRequested();
             ThrowIfDisposed();
@@ -359,12 +363,14 @@ namespace AspNet.Identity.PostgreSQL.Stores
             {
                 throw new ArgumentException("Value cannot be null or empty", nameof(roleName));
             }
-
-            var roleEntity = _roleTable.GetRoleByName(roleName);
-            if (roleEntity != null)
+            await Task.Run(() =>
             {
-                _userRolesTable.Delete(roleEntity.Id, user.Id);
-            }
+                var roleEntity = _roleTable.GetRoleByName(roleName);
+                if (roleEntity != null)
+                {
+                    _userRolesTable.Delete(roleEntity.Id, user.Id);
+                }
+            }, cancellationToken);
         }
 
         /// <summary>
@@ -381,7 +387,13 @@ namespace AspNet.Identity.PostgreSQL.Stores
             {
                 throw new ArgumentNullException(nameof(user));
             }
-            return _userRolesTable.FindByUserId(user.Id); ;
+            var list = new List<string>();
+            await Task.Run(() =>
+            {
+                list = _userRolesTable.FindByUserId(user.Id);
+
+            }, cancellationToken);
+            return list;
         }
 
         /// <summary>
@@ -404,15 +416,21 @@ namespace AspNet.Identity.PostgreSQL.Stores
             {
                 throw new ArgumentException(Consts.ValueNullOrEmpty, nameof(roleName));
             }
-            var role = _roleTable.GetRoleByName(roleName);
-            if (role != null)
+            IdentityRole role = null;
+            var result = false;
+            await Task.Run(() =>
             {
-                var userId = user.Id;
-                var roleId = role.Id;
-                
-                return _userRolesTable.GetRoleExistsInUser(userId, roleId);
-            }
-            return false;
+                role = _roleTable.GetRoleByName(roleName);
+                if (role != null)
+                {
+                    var userId = user.Id;
+                    var roleId = role.Id;
+
+                    result = _userRolesTable.GetRoleExistsInUser(userId, roleId);
+                }
+            }, cancellationToken);
+        
+            return result;
         }
 
         private void ThrowIfDisposed()
@@ -447,7 +465,12 @@ namespace AspNet.Identity.PostgreSQL.Stores
             {
                 throw new ArgumentNullException(nameof(user));
             }
-            var list = _userClaimsTable.FindByUserId(user.Id);
+            ClaimsIdentity list = null;
+            await Task.Run(() =>
+            {
+                list = _userClaimsTable.FindByUserId(user.Id);
+            }, cancellationToken);
+
             if (list == null)
                 return null;
             return list.Claims.ToList();
@@ -502,7 +525,10 @@ namespace AspNet.Identity.PostgreSQL.Stores
             {
                 throw new ArgumentNullException(nameof(newClaim));
             }
-            _userClaimsTable.Replace(user.Id, claim, newClaim);
+            await Task.Run(() =>
+            {
+                _userClaimsTable.Replace(user.Id, claim, newClaim);
+            }, cancellationToken);
         }
 
         /// <summary>
@@ -523,10 +549,14 @@ namespace AspNet.Identity.PostgreSQL.Stores
             {
                 throw new ArgumentNullException(nameof(claims));
             }
-            foreach (var claim in claims)
+            await Task.Run(() =>
             {
-                _userClaimsTable.Delete(user, claim);
-            }
+                foreach (var claim in claims)
+                {
+                    _userClaimsTable.Delete(user, claim);
+                }
+            }, cancellationToken);
+            
         }
 
         /// <summary>
@@ -577,7 +607,11 @@ namespace AspNet.Identity.PostgreSQL.Stores
                 throw new ArgumentNullException(nameof(user));
             }
             var userId = user.Id;
-            _userLoginsTable.Delete(user, new UserLoginInfo(loginProvider, providerKey, ""));
+            await Task.Run(() =>
+            {
+                _userLoginsTable.Delete(user, new UserLoginInfo(loginProvider, providerKey, ""));
+            }, cancellationToken);
+            
             //Todo need to be tested
         }
 
@@ -597,9 +631,14 @@ namespace AspNet.Identity.PostgreSQL.Stores
             {
                 throw new ArgumentNullException(nameof(user));
             }
-            
-            
-            return _userLoginsTable.FindByUserId(user.Id);
+            List<UserLoginInfo> list = null;
+
+            await Task.Run(() =>
+            {
+                list = _userLoginsTable.FindByUserId(user.Id);
+            }, cancellationToken);
+
+            return list;
         }
 
         /// <summary>
@@ -616,8 +655,13 @@ namespace AspNet.Identity.PostgreSQL.Stores
         {
             cancellationToken.ThrowIfCancellationRequested();
             ThrowIfDisposed();
+            TUser user = null;
+            await Task.Run(() =>
+            {
+                user = _userTable.GetUserById(_userLoginsTable.FindUserIdByLogin(new UserLoginInfo(loginProvider, providerKey, "")));
+            }, cancellationToken);
             
-            return _userTable.GetUserById(_userLoginsTable.FindUserIdByLogin(new UserLoginInfo(loginProvider, providerKey, "")));
+            return user;
         }
 
         /// <summary>
@@ -1050,8 +1094,14 @@ namespace AspNet.Identity.PostgreSQL.Stores
             {
                 throw new ArgumentNullException(nameof(claim));
             }
+            List<IdentityUser> list = null;
+            await Task.Run(() =>
+            {
+                list = _userClaimsTable.FindUsersByClaim(claim);
+            }, cancellationToken);
             
-            return _userClaimsTable.FindUsersByClaim(claim) as IList<TUser>;
+
+            return (IList<TUser>) list;
         }
 
         /// <summary>
@@ -1070,8 +1120,13 @@ namespace AspNet.Identity.PostgreSQL.Stores
             {
                 throw new ArgumentNullException(nameof(roleName));
             }
+            IList<IdentityUser> list = null;
+            await Task.Run(() =>
+            {
+                list = _roleTable.GetUsersInRole(roleName);
+            }, cancellationToken);
             
-            return (IList<TUser>) _roleTable.GetUsersInRole(roleName); 
+            return (IList<TUser>) list;
         }
 
         Task<IList<Claim>> IUserClaimStore<TUser>.GetClaimsAsync(TUser user, CancellationToken cancellationToken)

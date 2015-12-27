@@ -107,7 +107,7 @@ namespace AspNet.Identity.PostgreSQL.Tables
         /// </summary>
         /// <param name="userId">The user's id.</param>
         /// <returns></returns>
-        public TUser GetUserById(string userId)
+        public TUser GetUserById(Guid userId)
         {
 
             string commandText = "SELECT * FROM " + fullTableName + " WHERE " + FieldId.Quoted() + " = @id";
@@ -313,19 +313,20 @@ namespace AspNet.Identity.PostgreSQL.Tables
         {
             TUser user = null;
 
-         
+            await Task.Run(() =>
+            {
                 user = GetUserByUserName(normalizedUserName);
-          
+            });
             return user;
         }
 
-        public async Task<TUser> GetUserByIdAsync(string userId)
+        public async Task<TUser> GetUserByIdAsync(Guid userId)
         {
             TUser user = null;
-
-         
+            await Task.Run(() =>
+            {
                 user = GetUserById(userId);
-         
+            });
             return user;
         }
     }

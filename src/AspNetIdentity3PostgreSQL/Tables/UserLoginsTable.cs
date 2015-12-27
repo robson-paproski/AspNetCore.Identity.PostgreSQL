@@ -84,14 +84,14 @@ namespace AspNet.Identity.PostgreSQL.Tables
         /// </summary>
         /// <param name="userLogin">The user's login info.</param>
         /// <returns></returns>
-        public string FindUserIdByLogin(UserLoginInfo userLogin)
+        public Guid FindUserIdByLogin(UserLoginInfo userLogin)
         {
             string commandText = "SELECT "+fielduserID.Quoted()+" FROM "+fullTableName+" WHERE "+fieldLoginProvider.Quoted()+" = @loginProvider AND "+fieldProviderKey.Quoted()+" = @providerKey";
             Dictionary<string, object> parameters = new Dictionary<string, object>();
             parameters.Add("loginProvider", userLogin.LoginProvider);
             parameters.Add("providerKey", userLogin.ProviderKey);
 
-            return _database.GetStrValue(commandText, parameters);
+            return new Guid(_database.GetStrValue(commandText, parameters));
         }
 
         /// <summary>
