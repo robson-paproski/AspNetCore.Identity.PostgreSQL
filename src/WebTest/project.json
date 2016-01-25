@@ -6,7 +6,7 @@
   },
 
   "dependencies": {
-    "AspNetIdentity3PostgreSQL": "1.0.0-*",
+    "AspNet.Identity3.PostgreSQL": "1.0.0-beta1",
     "Microsoft.AspNet.Authentication.Cookies": "1.0.0-rc1-final",
     "Microsoft.AspNet.Diagnostics.Entity": "7.0.0-rc1-final",
     "Microsoft.AspNet.IISPlatformHandler": "1.0.0-rc1-final",
