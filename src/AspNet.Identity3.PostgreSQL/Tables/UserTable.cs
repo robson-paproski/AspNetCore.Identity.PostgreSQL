@@ -127,8 +127,8 @@ namespace AspNet.Identity.PostgreSQL.Tables
         {
             if (userName != null)
                 userName = userName.ToLower();
-
-            string commandText = "SELECT *  FROM " + fullTableName + " WHERE lower(" + FieldUserName.Quoted() + ") = @name";
+            //take in email field
+            string commandText = "SELECT *  FROM " + fullTableName + " WHERE lower(" + FieldEmail.Quoted() + ") = @name";
             Dictionary<string, object> parameters = new Dictionary<string, object>() { { "@name", userName } };
 
             var row = _database.ExecuteQueryGetSingleRow(commandText, parameters);
