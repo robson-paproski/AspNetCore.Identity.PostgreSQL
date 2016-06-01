@@ -11,10 +11,10 @@ Follow the steps below to add to your project
 3. You can remove every reference using entity framework for identity.
 
 4. In this version, the string connection is taken by config.json file, containing
-
+"
 {
   "DefaultConnection": "Server = xxx; Port = 5432; Database = db; User Id = postgres; Password = pass"
-}
+}"
 
 5. If you was using entity framework with identity, in your startup.cs class, remove the line .AddEntityFrameworkStores<ApplicationDbContext>() below of "services.AddIdentity<ApplicationUser, IdentityRole>()"
 
