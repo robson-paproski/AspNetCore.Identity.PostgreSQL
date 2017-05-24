@@ -1,6 +1,6 @@
 # AspNetCore Identity Provider for PostgreSQL
 
-This is a preview of Identity for PostgreSQL using the last .Net Core
+Identity for PostgreSQL using the last .Net Core
 
 Follow the steps below to add to your project
 
