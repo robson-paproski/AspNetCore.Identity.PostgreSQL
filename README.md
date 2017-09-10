@@ -35,8 +35,9 @@ Follow the steps below to add to your project
 5. In your startup class, add the following lines bellow services.AddIdentity\<ApplicationUser, IdentityRole\>()  
    ```
    .AddUserStore<UserStore<ApplicationUser>>()  
-   .AddRoleStore<RoleStore<IdentityRole>>()
-```
+   .AddRoleStore<RoleStore<IdentityRole>>() 
+   ```
+   
 6. In your startup class, add ```using IdentityRole = AspNetCore.Identity.PostgreSQL.IdentityRole;``` in the using section.
 
 
