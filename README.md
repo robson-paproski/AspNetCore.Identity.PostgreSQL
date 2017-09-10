@@ -32,14 +32,14 @@ Follow the steps below to add to your project
    below  
    services.AddIdentity<ApplicationUser, IdentityRole\>()
 
-6. In your startup class, add the following lines bellow services.AddIdentity\<ApplicationUser, IdentityRole\>()  
+5. In your startup class, add the following lines bellow services.AddIdentity\<ApplicationUser, IdentityRole\>()  
    ```.AddUserStore<UserStore<ApplicationUser>>()  
-   .AddRoleStore<RoleStore<IdentityRole>>()```
+   .AddRoleStore<RoleStore<IdentityRole>>()
+```
+6. In your startup class, add ```using IdentityRole = AspNetCore.Identity.PostgreSQL.IdentityRole;``` in the using section.
 
-7. In your startup class, add ```using IdentityRole = AspNetCore.Identity.PostgreSQL.IdentityRole;``` in the using section.
 
-
-8. Last but not least, execute the SQL script found in the solution items against your database in pgAdmin (or via the command line).
+7. Last but not least, execute the SQL script found in the solution items against your database in pgAdmin (or via the command line).
 
 
 After all done, maybe appears some Conversions Guid to String errors. Just put .ToString after User.Id and that's it. That occurours 
