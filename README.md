@@ -27,10 +27,10 @@ Follow the steps below to add to your project
 ```
 3. In your ApplicationUser class inside Models folder, change ```using Microsoft.AspNetCore.Identity;``` to ```using AspNetCore.Identity.PostgreSQL;```
 
-5. In your startup.cs class remove any reference to the ApplicationDbContext and the line   
-   ```.AddEntityFrameworkStores<ApplicationDbContext>() ```
+4. In your startup.cs class remove any reference to the ApplicationDbContext and the line   
+   .AddEntityFrameworkStores<ApplicationDbContext>()
    below  
-   services.AddIdentity\<ApplicationUser, IdentityRole\>()"
+   services.AddIdentity<ApplicationUser, IdentityRole\>()
 
 6. In your startup class, add the following lines bellow services.AddIdentity\<ApplicationUser, IdentityRole\>()  
    ```.AddUserStore<UserStore<ApplicationUser>>()  
