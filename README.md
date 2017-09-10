@@ -1,6 +1,8 @@
 # AspNetCore Identity Provider for PostgreSQL
 
-Identity for PostgreSQL using the last .Net Core
+Identity for PostgreSQL using the .Net Core 2.0
+
+Nuget Package: https://www.nuget.org/packages/AspNetCore.Identity.PostgreSQL.dll/
 
 Follow the steps below to add to your project
 
@@ -8,11 +10,7 @@ Follow the steps below to add to your project
 
 2. Add the AspNetCore.Identity.PostgreSQL project as reference to your main MVC project. Also available on Nuget
 
-3. In your MVC project, replace all references from "using Microsoft.AspNetCore.Identity.EntityFrameworkCore;" with "using AspNetCore.Identity.PostgreSQL;".
-
-4. You should remove every reference to entity framework usage for identity.
-
-5. In your appsetings.Development and .Production, you should add a PostgreSQLBaseConnection string.
+3. In your appsetings.Development and .Production, you should add a PostgreSQLBaseConnection string.
    "  
    {
   "ConnectionStrings": {
@@ -20,19 +18,28 @@ Follow the steps below to add to your project
   }
 }
 "  
+4. In your ApplicationUser class inside Models folder, change "using Microsoft.AspNetCore.Identity;" to "using AspNetCore.Identity.PostgreSQL;"
 
-6. In your startup.cs class remove the line   
+5. In your startup.cs class remove the line   
    .AddEntityFrameworkStores\<ApplicationDbContext\>() 
    below  
    services.AddIdentity\<ApplicationUser, IdentityRole\>()"
 
-7. In your startup class, add the following lines bellow services.AddIdentity\<ApplicationUser, IdentityRole\>()  
+6. In your startup class, add the following lines bellow services.AddIdentity\<ApplicationUser, IdentityRole\>()  
    .AddUserStore\<UserStore\<ApplicationUser\>\>()  
    .AddRoleStore\<RoleStore\<IdentityRole\>\>()
+
+7. In your startup class, add "using IdentityRole = AspNetCore.Identity.PostgreSQL.IdentityRole;" in the using section.
+
 
 8. Last but not least, execute the SQL script found in the solution items against your database in pgAdmin (or via the command line).
 
 
-This repo also contains a test project. You just need to modifiy the config.json to connect to your database, and exec the SQL script included.
+After all done, maybe appears some Conversions Guid to String errors. Just put .ToString after User.Id and that's it. That occurours 
+
+
+This repo also contains a test project. You just need to modifiy the appSettings..json to connect to your database, and exec the SQL script included.
+
+To configure the connection string that will be used, you can put IdentityDbConfig.StringConnectionName= "ConnectionStringName"; in your Startup.cs
 
 If you have any questions feel free to open an issue

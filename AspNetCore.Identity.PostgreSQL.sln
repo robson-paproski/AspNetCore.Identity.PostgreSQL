@@ -1,16 +1,18 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.4
+VisualStudioVersion = 15.0.26730.12
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetCore.Identity.PostgreSQL", "AspNetCore.Identity.PostgreSQL\AspNetCore.Identity.PostgreSQL.csproj", "{9CE6763F-FE14-4FFB-AEF5-F69AA712F55E}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebExample", "WebExample\WebExample.csproj", "{1F910597-E02B-4F95-9F1B-67E27368891C}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{F204EC76-7505-47B7-810A-3E87AE87CDFA}"
 	ProjectSection(SolutionItems) = preProject
 		PostgresIdentity.sql = PostgresIdentity.sql
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebExample", "WebExample\WebExample.csproj", "{9EBBA734-32F0-4210-BFEF-EC6AF68CDF68}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetCore.Identity.PostgreSQL", "AspNetCore.Identity.PostgreSQL\AspNetCore.Identity.PostgreSQL.csproj", "{69B9AA22-E1EE-4A48-A4D4-F98DC4169285}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetCore.Identity.PostgreSQL.NetStandard", "AspNetCore.Identity.PostgreSQL.NetStandard\AspNetCore.Identity.PostgreSQL.NetStandard.csproj", "{A535150F-6003-4D8A-A2C1-D45EB9986C12}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -18,16 +20,23 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{9CE6763F-FE14-4FFB-AEF5-F69AA712F55E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9CE6763F-FE14-4FFB-AEF5-F69AA712F55E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9CE6763F-FE14-4FFB-AEF5-F69AA712F55E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9CE6763F-FE14-4FFB-AEF5-F69AA712F55E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1F910597-E02B-4F95-9F1B-67E27368891C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1F910597-E02B-4F95-9F1B-67E27368891C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1F910597-E02B-4F95-9F1B-67E27368891C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1F910597-E02B-4F95-9F1B-67E27368891C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9EBBA734-32F0-4210-BFEF-EC6AF68CDF68}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9EBBA734-32F0-4210-BFEF-EC6AF68CDF68}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9EBBA734-32F0-4210-BFEF-EC6AF68CDF68}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9EBBA734-32F0-4210-BFEF-EC6AF68CDF68}.Release|Any CPU.Build.0 = Release|Any CPU
+		{69B9AA22-E1EE-4A48-A4D4-F98DC4169285}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{69B9AA22-E1EE-4A48-A4D4-F98DC4169285}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{69B9AA22-E1EE-4A48-A4D4-F98DC4169285}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{69B9AA22-E1EE-4A48-A4D4-F98DC4169285}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A535150F-6003-4D8A-A2C1-D45EB9986C12}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A535150F-6003-4D8A-A2C1-D45EB9986C12}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A535150F-6003-4D8A-A2C1-D45EB9986C12}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A535150F-6003-4D8A-A2C1-D45EB9986C12}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {515DFFE9-8D88-49C6-81FD-979BB9674CD2}
 	EndGlobalSection
 EndGlobal
