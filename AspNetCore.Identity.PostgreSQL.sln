@@ -8,11 +8,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		PostgresIdentity.sql = PostgresIdentity.sql
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebExample", "WebExample\WebExample.csproj", "{9EBBA734-32F0-4210-BFEF-EC6AF68CDF68}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebExample", "WebExample\WebExample.csproj", "{9EBBA734-32F0-4210-BFEF-EC6AF68CDF68}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetCore.Identity.PostgreSQL", "AspNetCore.Identity.PostgreSQL\AspNetCore.Identity.PostgreSQL.csproj", "{69B9AA22-E1EE-4A48-A4D4-F98DC4169285}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetCore.Identity.PostgreSQL.NetStandard", "AspNetCore.Identity.PostgreSQL.NetStandard\AspNetCore.Identity.PostgreSQL.NetStandard.csproj", "{A535150F-6003-4D8A-A2C1-D45EB9986C12}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNetCore.Identity.PostgreSQL", "AspNetCore.Identity.PostgreSQL\AspNetCore.Identity.PostgreSQL.csproj", "{A535150F-6003-4D8A-A2C1-D45EB9986C12}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -24,10 +22,6 @@ Global
 		{9EBBA734-32F0-4210-BFEF-EC6AF68CDF68}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9EBBA734-32F0-4210-BFEF-EC6AF68CDF68}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9EBBA734-32F0-4210-BFEF-EC6AF68CDF68}.Release|Any CPU.Build.0 = Release|Any CPU
-		{69B9AA22-E1EE-4A48-A4D4-F98DC4169285}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{69B9AA22-E1EE-4A48-A4D4-F98DC4169285}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{69B9AA22-E1EE-4A48-A4D4-F98DC4169285}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{69B9AA22-E1EE-4A48-A4D4-F98DC4169285}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A535150F-6003-4D8A-A2C1-D45EB9986C12}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A535150F-6003-4D8A-A2C1-D45EB9986C12}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A535150F-6003-4D8A-A2C1-D45EB9986C12}.Release|Any CPU.ActiveCfg = Release|Any CPU
