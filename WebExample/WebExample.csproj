@@ -22,4 +22,8 @@
     <ProjectReference Include="..\AspNetCore.Identity.PostgreSQL\AspNetCore.Identity.PostgreSQL.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Views\ApplicationRole\" />
+    <Folder Include="Code\" />
+  </ItemGroup>
 </Project>
