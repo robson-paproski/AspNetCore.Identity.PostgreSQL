@@ -33,6 +33,7 @@ namespace WebExample
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddUserStore<UserStore<ApplicationUser>> ()
                 .AddRoleStore<RoleStore<IdentityRole>> ()
+                .AddRoleManager<RoleManager<IdentityRole>>()
                     .AddDefaultTokenProviders();
 
             // Add application services.

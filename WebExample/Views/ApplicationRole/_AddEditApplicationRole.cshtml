@@ -1,8 +1,8 @@
 ﻿@model ApplicationRoleViewModel
-@using IdentitySampleApplication.Models
+@using WebExample.Models
 
 <form asp-action="AddEditApplicationRole" role="form">
-    @await Html.PartialAsync("_ModalHeader", new ModalHeader { Heading =$"{(String.IsNullOrEmpty(Model.Id)? "Add" : "Edit")} Application Role"  })
+    @await Html.PartialAsync("_ModalHeader", new ModalHeader { Heading =$"{(String.IsNullOrEmpty(Model.Id.ToString())? "Add" : "Edit")} Application Role"  })
     <div class="modal-body form-horizontal">
         <div class="row">
             <div class="form-group">

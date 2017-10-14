@@ -3,8 +3,6 @@ namespace WebExample.Models
 {
     public class ModalHeader
     {
-        public ModalHeader()
-        {
-        }
+        public string Heading { get; set; }
     }
 }
