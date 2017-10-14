@@ -36,11 +36,11 @@ namespace AspNetCore.Identity.PostgreSQL.Tables
             List<string> roles = new List<string>();
             //TODO: This probably does not work, and may need testing.
 
-            string commandText = "select AspRoles." + RoleTable.fieldName.Quoted() + " from " + UserTable<IdentityUser>.fullTableName + " AspUsers" +
+            string commandText = "select AspRoles." + RoleTable<IdentityRole>.fieldName.Quoted() + " from " + UserTable<IdentityUser>.fullTableName + " AspUsers" +
                 " INNER JOIN " + fullTableName + " AspUserRoles " +
                 " ON AspUsers." + UserTable<IdentityUser>.FieldId.Quoted() + " = AspUserRoles." + fieldUserID.Quoted() +
-                " INNER JOIN " + RoleTable.fullTableName + " AspRoles " +
-                " ON AspUserRoles." + fieldRoleID.Quoted() + " = AspRoles." + RoleTable.fieldId.Quoted() +
+                " INNER JOIN " + RoleTable<IdentityRole>.fullTableName + " AspRoles " +
+                " ON AspUserRoles." + fieldRoleID.Quoted() + " = AspRoles." + RoleTable<IdentityRole>.fieldId.Quoted() +
                 " where AspUsers." + UserTable<IdentityUser>.FieldId.Quoted() + " = @userId";
                         
             /*select AspNetRoles.Name from AspNetUsers
@@ -57,7 +57,7 @@ namespace AspNetCore.Identity.PostgreSQL.Tables
             var rows = _database.ExecuteQuery(commandText, parameters);
             foreach(var row in rows)
             {
-                roles.Add(row[RoleTable.fieldName]);
+                roles.Add(row[RoleTable<IdentityRole>.fieldName]);
             }
 
             return roles;

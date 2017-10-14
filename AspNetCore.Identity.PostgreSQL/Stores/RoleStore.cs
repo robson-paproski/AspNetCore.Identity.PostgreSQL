@@ -2,10 +2,12 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 using AspNetCore.Identity.PostgreSQL.Context;
 using AspNetCore.Identity.PostgreSQL.Tables;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
+
 
 namespace AspNetCore.Identity.PostgreSQL.Stores
 {
@@ -15,15 +17,13 @@ namespace AspNetCore.Identity.PostgreSQL.Stores
     public class RoleStore<TRole> : IQueryableRoleStore<TRole>
         where TRole : IdentityRole
     {
-        private RoleTable roleTable;
+        private RoleTable<TRole> _roleTable;
         public PostgreSQLDatabase Database { get;  }
+        private bool _disposed;
 
         public IQueryable<TRole> Roles
         {
-            get
-            {
-                throw new NotImplementedException();
-            }
+            get { return _roleTable.GetRoles().AsQueryable(); }
         }
 
 
@@ -39,17 +39,35 @@ namespace AspNetCore.Identity.PostgreSQL.Stores
         public RoleStore(IConfiguration config)
         {
             this.Database = new PostgreSQLDatabase(config);
-            this.roleTable = new RoleTable(Database);
+            this._roleTable = new RoleTable<TRole>(Database);
         }
 
         public void Dispose()
         {
-            //throw new NotImplementedException();
+            _disposed = true;
         }
 
-        public Task<IdentityResult> CreateAsync(TRole role, CancellationToken cancellationToken)
+        private void ThrowIfDisposed()
         {
-            return Task.FromResult(IdentityResult.Success);
+            if (_disposed)
+            {
+                throw new ObjectDisposedException(GetType().Name);
+            }
+        }
+
+        public async Task<IdentityResult> CreateAsync(TRole role, CancellationToken cancellationToken)
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+            ThrowIfDisposed();
+            if (role == null)
+            {
+                throw new ArgumentNullException(nameof(role));
+            }
+            await Task.Run(() =>
+            {
+                _roleTable.Insert(role);
+            }, cancellationToken);
+            return IdentityResult.Success;
         }
 
         public Task<IdentityResult> UpdateAsync(TRole role, CancellationToken cancellationToken)

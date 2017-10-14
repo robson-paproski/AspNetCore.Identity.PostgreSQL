@@ -24,7 +24,7 @@ namespace AspNetCore.Identity.PostgreSQL.Context
             {
                 _connection = new Npgsql.NpgsqlConnection(_configurationRoot.GetConnectionString(IdentityDbConfig.StringConnectionName));
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 throw new Exception("Could not connect to the database.");
             }

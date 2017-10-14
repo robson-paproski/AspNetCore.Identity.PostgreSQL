@@ -9,14 +9,17 @@ namespace AspNetCore.Identity.PostgreSQL.Tables
     /// <summary>
     /// Class that represents the AspNetRoles table in the PostgreSQL Database.
     /// </summary>
-    public class RoleTable
+    public class RoleTable<TRole>  where TRole : IdentityRole
     {
         private PostgreSQLDatabase _database;
+        private UserClaimsTable _userClaimsTable;
 
         internal const string tableName = "AspNetRoles";
         internal const string fieldId   = "Id";
         internal const string fieldName = "Name";
         internal static string fullTableName = Consts.Schema.Quoted() + "." + tableName.Quoted();
+
+       
 
         /// <summary>
         /// Constructor that takes a PostgreSQLDatabase instance.
@@ -25,6 +28,7 @@ namespace AspNetCore.Identity.PostgreSQL.Tables
         public RoleTable(PostgreSQLDatabase database)
         {
             _database = database;
+            _userClaimsTable = new UserClaimsTable(database);
         }
 
         /// <summary>
@@ -144,6 +148,33 @@ namespace AspNetCore.Identity.PostgreSQL.Tables
             var list = rows.Select(UserTable<IdentityUser>.loadUser).ToList();
 
             return list;
+        }
+
+        public IList<TRole> GetRoles()
+        {
+            string commandText = "SELECT * FROM " + fullTableName;
+
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
+          
+
+            var rows = _database.ExecuteQuery(commandText, parameters);
+            var list = rows.Select(loadRole).ToList();
+
+            return list;
+        }
+
+
+        private TRole loadRole(Dictionary<string, string> arg)
+        {
+            if ((arg == null) || (arg.Count() == 0))
+                return null;
+
+            return new IdentityRole()
+            {
+                Id = new Guid(arg["Id"]),
+                Name = arg["Name"],
+                ConcurrencyStamp = arg["ConcurrencyStamp"]
+            } as TRole;
         }
     }
 }

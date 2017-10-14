@@ -28,7 +28,7 @@ namespace AspNetCore.Identity.PostgreSQL.Stores
         IUserTwoFactorStore<TUser> where TUser : IdentityUser
     {
         private readonly UserTable<TUser> _userTable;
-        private readonly RoleTable _roleTable;
+        private readonly RoleTable<IdentityRole> _roleTable;
         private readonly UserRolesTable _userRolesTable;
         private readonly UserClaimsTable _userClaimsTable;
         private readonly UserLoginsTable _userLoginsTable;
@@ -50,7 +50,7 @@ namespace AspNetCore.Identity.PostgreSQL.Stores
         {
             _database = new PostgreSQLDatabase(config);
             _userTable = new UserTable<TUser>(_database);
-            _roleTable = new RoleTable(_database);
+            _roleTable = new RoleTable<IdentityRole>(_database);
             _userRolesTable = new UserRolesTable(_database);
             _userClaimsTable = new UserClaimsTable(_database);
             _userLoginsTable = new UserLoginsTable(_database);
